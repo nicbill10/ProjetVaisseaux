@@ -10,7 +10,6 @@ namespace ProjetVaisseaux
     {
         static void Main(string[] args)
         {
-            1.2 test
         }
     }
 }
