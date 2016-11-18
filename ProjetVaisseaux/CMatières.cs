@@ -8,5 +8,9 @@ namespace ProjetVaisseaux
 {
     class CMatières
     {
+        public CMatières()
+        {
+
+        }
     }
 }
