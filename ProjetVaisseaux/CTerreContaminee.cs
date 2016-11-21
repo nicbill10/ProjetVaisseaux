@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CTerreContaminee:CMatières
     {
-        static void Main(string[] args)
+        public CTerreContaminee(int quantite):base("terre", quantite)
         {
-            CDeroulement deroulement = new CDeroulement();
 
-            deroulement.CréerListeVaisseaux();
         }
     }
 }

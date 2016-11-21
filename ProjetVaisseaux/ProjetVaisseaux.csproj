@@ -43,7 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CCentreTri.cs" />
+    <Compile Include="CDeroulement.cs" />
+    <Compile Include="CFerraille.cs" />
     <Compile Include="CMatières.cs" />
+    <Compile Include="CPapier.cs" />
+    <Compile Include="CPlastique.cs" />
+    <Compile Include="CTerreContaminee.cs" />
+    <Compile Include="CVaisseau.cs" />
+    <Compile Include="CVaisseauCargo.cs" />
+    <Compile Include="CVaisseauLeger.cs" />
+    <Compile Include="CVerre.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

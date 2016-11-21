@@ -8,9 +8,11 @@ namespace ProjetVaisseaux
 {
     class CMatières
     {
-        public CMatières()
+        string type;
+        int quantite;
+        public CMatières(string type, int quantite)
         {
-
+            this.type = type;
         }
     }
 }

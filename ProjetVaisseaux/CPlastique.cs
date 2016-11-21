@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CPlastique:CMatières
     {
-        static void Main(string[] args)
+        public CPlastique(int quantite):base("plastique", quantite)
         {
-            CDeroulement deroulement = new CDeroulement();
 
-            deroulement.CréerListeVaisseaux();
         }
     }
 }

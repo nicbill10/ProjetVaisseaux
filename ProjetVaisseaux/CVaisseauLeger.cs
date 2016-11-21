@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CVaisseauLeger:CVaisseau
     {
-        static void Main(string[] args)
+        public CVaisseauLeger():base(108)
         {
-            CDeroulement deroulement = new CDeroulement();
-
-            deroulement.CréerListeVaisseaux();
+            
         }
+
+        
     }
 }

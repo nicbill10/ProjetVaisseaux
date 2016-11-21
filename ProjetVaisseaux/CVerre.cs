@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CVerre:CMatières
     {
-        static void Main(string[] args)
+        public CVerre(int quantite):base("verre", quantite)
         {
-            CDeroulement deroulement = new CDeroulement();
-
-            deroulement.CréerListeVaisseaux();
+            
         }
     }
 }

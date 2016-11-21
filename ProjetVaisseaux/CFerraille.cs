@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CFerraille:CMatières
     {
-        static void Main(string[] args)
+        public CFerraille(int quantite):base("ferraille", quantite)
         {
-            CDeroulement deroulement = new CDeroulement();
 
-            deroulement.CréerListeVaisseaux();
         }
     }
 }
