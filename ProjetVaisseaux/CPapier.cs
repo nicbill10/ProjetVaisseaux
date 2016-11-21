@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CPapier:CMatières
     {
-        static void Main(string[] args)
+        public CPapier(int quantite):base("papier", quantite)
         {
-            CDeroulement deroulement = new CDeroulement();
-
-            deroulement.CréerListeVaisseaux();
+            
         }
     }
 }

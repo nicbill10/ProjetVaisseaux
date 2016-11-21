@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class Program
+    class CCentreTri
     {
-        static void Main(string[] args)
+        public CCentreTri(string type)
         {
-            CDeroulement deroulement = new CDeroulement();
 
-            deroulement.CréerListeVaisseaux();
         }
     }
 }
