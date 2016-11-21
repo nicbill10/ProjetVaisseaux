@@ -39,7 +39,6 @@ namespace ProjetVaisseaux
                 int quantitePlastique = random.Next(1, vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - 1);
                 int quantiteFerraille = random.Next(1, vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - quantitePlastique);
                 int quantiteTerre = vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - quantitePlastique - quantiteFerraille;
-
                 int sommeMateriaux = quantitePapier + quantiteVerre + quantitePlastique + quantiteFerraille + quantiteTerre;
 
                 Console.WriteLine(cpt + " " + vaisseau.CAPACITEMAX + " " + quantitePapier + " " + quantiteVerre + " " + quantitePlastique + " " + quantiteFerraille + " " + quantiteTerre + " " + sommeMateriaux);
