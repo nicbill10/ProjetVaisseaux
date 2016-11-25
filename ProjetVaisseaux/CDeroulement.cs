@@ -9,13 +9,22 @@ namespace ProjetVaisseaux
     class CDeroulement
     {
         Queue<CVaisseau> fileVaisseaux = new Queue<CVaisseau>();
+        List<CCentreTri> listeCentresTri = new List<CCentreTri>();
         Random random = new Random();
         public CDeroulement()
         {
             
         }
 
-        public void CréerListeVaisseaux()
+       
+
+        public void deroulement()
+        {
+            creerListeVaisseaux();
+            creerCentresTri();
+        }
+
+        public void creerListeVaisseaux()
         {
             for(int i = 1; i <= 100; i++)
             {
@@ -31,7 +40,7 @@ namespace ProjetVaisseaux
             }
 
             int cpt = 0;
-            foreach(CVaisseau vaisseau in fileVaisseaux)
+            foreach (CVaisseau vaisseau in fileVaisseaux)
             {
                 cpt++;
                 int quantitePapier = random.Next(1, (vaisseau.CAPACITEMAX - 3));
@@ -42,8 +51,21 @@ namespace ProjetVaisseaux
                 int sommeMateriaux = quantitePapier + quantiteVerre + quantitePlastique + quantiteFerraille + quantiteTerre;
 
                 Console.WriteLine(cpt + " " + vaisseau.CAPACITEMAX + " " + quantitePapier + " " + quantiteVerre + " " + quantitePlastique + " " + quantiteFerraille + " " + quantiteTerre + " " + sommeMateriaux);
+            }          
+            Console.ReadKey();
+        }
+
+        public void creerCentresTri()
+        {
+            for(int i = 1; i <= 5; i++)
+            {
+                listeCentresTri.Add(new CCentreTri("impair"));
+                listeCentresTri.Add(new CCentreTri("pair"));
             }
-                        
+            foreach(CCentreTri centreTri in listeCentresTri)
+            {
+                Console.WriteLine(centreTri.TYPE);
+            }
             Console.ReadKey();
         }
     }

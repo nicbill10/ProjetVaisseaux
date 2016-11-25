@@ -40,6 +40,11 @@ namespace ProjetVaisseaux
             }
         }
 
+        public string TYPE
+        {
+            get { return type; }
+        }
+
         public Stack<CPapier> PILEPAPIER
         {
             get { return pilePapier; }
@@ -52,7 +57,7 @@ namespace ProjetVaisseaux
             set { pileVerre = value; }
         }
 
-        public Stack<CPlastique> PILEPLASTIQUE9
+        public Stack<CPlastique> PILEPLASTIQUE
         {
             get { return pilePlastique; }
             set { pilePlastique = value; }
