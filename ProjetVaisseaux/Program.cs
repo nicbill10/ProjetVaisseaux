@@ -12,7 +12,7 @@ namespace ProjetVaisseaux
         {
             CDeroulement deroulement = new CDeroulement();
 
-            deroulement.CréerListeVaisseaux();
+            deroulement.deroulement();
         }
     }
 }
