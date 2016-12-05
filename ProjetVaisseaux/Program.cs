@@ -11,8 +11,6 @@ namespace ProjetVaisseaux
         static void Main(string[] args)
         {
             CDeroulement deroulement = new CDeroulement();
-
-            deroulement.deroulement();
         }
     }
 }

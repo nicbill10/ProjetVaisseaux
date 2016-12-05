@@ -13,18 +13,11 @@ namespace ProjetVaisseaux
         Random random = new Random();
         public CDeroulement()
         {
-            
+            CreerListeVaisseaux();
+            CreerCentresTri();
         }
 
-       
-
-        public void deroulement()
-        {
-            creerListeVaisseaux();
-            creerCentresTri();
-        }
-
-        public void creerListeVaisseaux()
+        public void CreerListeVaisseaux()
         {
             for(int i = 1; i <= 100; i++)
             {
@@ -43,19 +36,19 @@ namespace ProjetVaisseaux
             foreach (CVaisseau vaisseau in fileVaisseaux)
             {
                 cpt++;
-                int quantitePapier = random.Next(1, (vaisseau.CAPACITEMAX - 3));
-                int quantiteVerre = random.Next(1, vaisseau.CAPACITEMAX - quantitePapier - 2);
-                int quantitePlastique = random.Next(1, vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - 1);
-                int quantiteFerraille = random.Next(1, vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - quantitePlastique);
-                int quantiteTerre = vaisseau.CAPACITEMAX - quantitePapier - quantiteVerre - quantitePlastique - quantiteFerraille;
-                int sommeMateriaux = quantitePapier + quantiteVerre + quantitePlastique + quantiteFerraille + quantiteTerre;
+                vaisseau.PAPIER = new CPapier(random.Next(1, (vaisseau.CAPACITEMAX - 3)));
+                vaisseau.VERRE = new CVerre(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - 2));
+                vaisseau.PLASTIQUE = new CPlastique(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - 1));
+                vaisseau.FERRAILLE = new CFerraille(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - vaisseau.PLASTIQUE.QUANTITE));
+                vaisseau.TERRE = new CTerreContaminee(vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - vaisseau.PLASTIQUE.QUANTITE - vaisseau.FERRAILLE.QUANTITE);
+                int sommeMateriaux = vaisseau.PAPIER.QUANTITE + vaisseau.VERRE.QUANTITE + vaisseau.PLASTIQUE.QUANTITE + vaisseau.FERRAILLE.QUANTITE + vaisseau.TERRE.QUANTITE;
 
-                Console.WriteLine(cpt + " " + vaisseau.CAPACITEMAX + " " + quantitePapier + " " + quantiteVerre + " " + quantitePlastique + " " + quantiteFerraille + " " + quantiteTerre + " " + sommeMateriaux);
+                Console.WriteLine(cpt + " " + vaisseau.CAPACITEMAX + " " + vaisseau.PAPIER.QUANTITE + " " + vaisseau.VERRE.QUANTITE + " " + vaisseau.PLASTIQUE.QUANTITE + " " + vaisseau.FERRAILLE.QUANTITE + " " + vaisseau.TERRE.QUANTITE + " " + sommeMateriaux);
             }          
             Console.ReadKey();
         }
 
-        public void creerCentresTri()
+        public void CreerCentresTri()
         {
             for(int i = 1; i <= 5; i++)
             {
@@ -67,6 +60,18 @@ namespace ProjetVaisseaux
                 Console.WriteLine(centreTri.TYPE);
             }
             Console.ReadKey();
+
+            listeCentresTri[0].FILEARRIVEE = fileVaisseaux;
         }
+
+        public void DechargerVaisseau()
+        {
+            int CentreTri = 0;
+
+            if()
+            listeCentresTri[CentreTri].PILEPAPIER.Push(listeCentresTri[CentreTri].FILEARRIVEE.Peek().PAPIER);
+        }
+
+        
     }
 }

@@ -13,6 +13,13 @@ namespace ProjetVaisseaux
         public CMatières(string type, int quantite)
         {
             this.type = type;
+            this.quantite = quantite;
+        }
+
+        public int QUANTITE
+        {
+            get { return quantite; }
+            set { quantite = value; }
         }
     }
 }

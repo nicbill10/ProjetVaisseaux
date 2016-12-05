@@ -74,5 +74,17 @@ namespace ProjetVaisseaux
             get { return pileTerre; }
             set { pileTerre = value; }
         }
+
+        public Queue<CVaisseau> FILEARRIVEE
+        {
+            get { return fileArrivee; }
+            set { fileArrivee = value; }
+        }
+
+        public Queue<CVaisseau> FILEDEPART
+        {
+            get { return fileDepart; }
+            set { fileDepart = value; }
+        }
     }
 }
