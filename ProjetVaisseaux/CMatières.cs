@@ -21,5 +21,11 @@ namespace ProjetVaisseaux
             get { return quantite; }
             set { quantite = value; }
         }
+
+        public string TYPE
+        {
+            get { return type; }
+            set { type = value; }
+        }
     }
 }

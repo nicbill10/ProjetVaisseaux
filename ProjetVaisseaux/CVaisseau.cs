@@ -14,6 +14,7 @@ namespace ProjetVaisseaux
         CPlastique plastique;
         CFerraille ferraille;
         CTerreContaminee terre;
+        Stack<CMatières> PileMatieresVaisseaux = new Stack<CMatières>();
 
 
         public CVaisseau(int capaciteMax)
@@ -37,7 +38,7 @@ namespace ProjetVaisseaux
             get { return verre; }
             set { verre = value; }
         }
-    
+
         public CPlastique PLASTIQUE
         {
             get { return plastique; }
@@ -54,6 +55,12 @@ namespace ProjetVaisseaux
         {
             get { return terre; }
             set { terre = value; }
+        }
+
+        public Stack<CMatières> PILEMATIEREVAISSEAU
+        {
+            get { return PileMatieresVaisseaux; }
+            set { PileMatieresVaisseaux = value; }
         }
     }       
 }

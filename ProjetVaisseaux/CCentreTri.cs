@@ -17,10 +17,12 @@ namespace ProjetVaisseaux
         Stack<CTerreContaminee> pileTerre = new Stack<CTerreContaminee>();
 
         int capaciteMaxPapier, capaciteMaxVerre, capaciteMaxPlastique, capaciteMaxFerraille, capaciteMaxTerre;
+        double noCentre;
         string type;
-        public CCentreTri(string type)
+        public CCentreTri(string type, double NoCentre)
         {
             this.type = type;
+            this.noCentre = NoCentre;
 
             if(this.type == "pair")
             {
@@ -30,13 +32,45 @@ namespace ProjetVaisseaux
                 capaciteMaxFerraille = 457;
                 capaciteMaxTerre = 639;
             }
-            else
+            if(this.type == "impair")
             { 
                 capaciteMaxPapier = 3067;
                 capaciteMaxVerre = 2456;
                 capaciteMaxPlastique = 561;
                 capaciteMaxFerraille = 2658;
                 capaciteMaxTerre = 8234;
+            }
+            if (this.type == "premier/impair")
+            {
+                capaciteMaxPapier = 0;
+                capaciteMaxVerre = 0;
+                capaciteMaxPlastique = 561;
+                capaciteMaxFerraille = 2658;
+                capaciteMaxTerre = 0;
+            }
+            if (this.type == "multiple/impair")
+            {
+                capaciteMaxPapier = 0;
+                capaciteMaxVerre = 2456;
+                capaciteMaxPlastique = 0;
+                capaciteMaxFerraille = 0;
+                capaciteMaxTerre = 8234;
+            }
+            if (this.type == "premier/pair")
+            {
+                capaciteMaxPapier = 0;
+                capaciteMaxVerre = 0;
+                capaciteMaxPlastique = 3456;
+                capaciteMaxFerraille = 457;
+                capaciteMaxTerre = 0;
+            }
+            if (this.type == "multiple/pair")
+            {
+                capaciteMaxPapier = 0;
+                capaciteMaxVerre = 857;
+                capaciteMaxPlastique = 0;
+                capaciteMaxFerraille = 0;
+                capaciteMaxTerre = 639;
             }
         }
 
@@ -85,6 +119,37 @@ namespace ProjetVaisseaux
         {
             get { return fileDepart; }
             set { fileDepart = value; }
+        }
+
+        public double NOCENTRE
+        {
+            get { return noCentre; }
+            set { noCentre = value; }
+        }
+
+        public int CAPACITEMAXPAPIER
+        {
+            get { return capaciteMaxPapier; }
+        }
+
+        public int CAPACITEMAXFERAILLE
+        {
+            get { return capaciteMaxFerraille; }
+        }
+
+        public int CAPACITEMAXVERRE
+        {
+            get { return capaciteMaxVerre; }
+        }
+
+        public int CAPACITEMAXPLASTIQUE
+        {
+            get { return capaciteMaxPlastique; }
+        }
+
+        public int CAPACITEMAXTERRE
+        {
+            get { return capaciteMaxTerre; }
         }
     }
 }
