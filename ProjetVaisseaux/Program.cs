@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*******************************************************************************
+    Nicolas Bilodeau
+    Charles Bouchard-Tremblay
+
+    Projet final: Gestion de centre de tri
+
+    Description: Simulation de tri de matières recyclables
+********************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +20,7 @@ namespace ProjetVaisseaux
         static void Main(string[] args)
         {
             CDeroulement deroulement = new CDeroulement();
+            Console.ReadKey();
         }
     }
 }
