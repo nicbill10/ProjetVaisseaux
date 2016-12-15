@@ -10,6 +10,7 @@ namespace ProjetVaisseaux
     {
         Queue<CVaisseau> fileArrivee = new Queue<CVaisseau>();
         Queue<CVaisseau> fileDepart = new Queue<CVaisseau>();
+        Queue<CVaisseau> fileVaisseauxVide = new Queue<CVaisseau>(); //Création d'une file pour envoyer les vaisseaux vides
         Stack<CPapier> pilePapier = new Stack<CPapier>();
         Stack<CVerre> pileVerre = new Stack<CVerre>();
         Stack<CPlastique> pilePlastique = new Stack<CPlastique>();
@@ -119,6 +120,12 @@ namespace ProjetVaisseaux
         {
             get { return fileDepart; }
             set { fileDepart = value; }
+        }
+
+        public Queue<CVaisseau> FILEVAISSEAUXVIDE
+        {
+            get { return fileVaisseauxVide; }
+            set { fileVaisseauxVide = value; }
         }
 
         public double NOCENTRE

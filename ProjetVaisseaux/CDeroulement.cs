@@ -49,6 +49,9 @@ namespace ProjetVaisseaux
 
         public void CreerListeVaisseaux() //Crée la liste de vaisseaux aléatoirement
         {
+
+            int Qte, matiereRandom;
+
             for (int i = 1; i <= nbrVaisseaux; i++)
             {
                 int rndTypeVaisseau = random.Next(1, 3);
@@ -61,18 +64,49 @@ namespace ProjetVaisseaux
                     fileVaisseaux.Enqueue(new CVaisseauCargo());
                 }
             }
-
-            int cpt = 0;
-            foreach (CVaisseau vaisseau in fileVaisseaux) //Le random n'est pas optimisé
+            foreach (CVaisseau vaisseau in fileVaisseaux) //Nouveau random qui choisi quelle matière sera ajouté, et ensuite il insère une quantité de cette matière aléatoirement, sauf s'il reste 20 m³ d'espace ou moins.
             {
-                cpt++;
-                vaisseau.PILEMATIEREVAISSEAU.Push(vaisseau.PAPIER = new CPapier(random.Next(1, (vaisseau.CAPACITEMAX - 3))));
-                vaisseau.PILEMATIEREVAISSEAU.Push(vaisseau.VERRE = new CVerre(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - 2)));
-                vaisseau.PILEMATIEREVAISSEAU.Push(vaisseau.PLASTIQUE = new CPlastique(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - 1)));
-                vaisseau.PILEMATIEREVAISSEAU.Push(vaisseau.FERRAILLE = new CFerraille(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - vaisseau.PLASTIQUE.QUANTITE)));
-                vaisseau.PILEMATIEREVAISSEAU.Push(vaisseau.TERRE = new CTerreContaminee(vaisseau.CAPACITEMAX - vaisseau.PAPIER.QUANTITE - vaisseau.VERRE.QUANTITE - vaisseau.PLASTIQUE.QUANTITE - vaisseau.FERRAILLE.QUANTITE));
+                Qte = 0;
+                while (Qte < vaisseau.CAPACITEMAX)
+                {
+                    
+                    matiereRandom = random.Next(5);
+                    switch(matiereRandom)
+                    {
+                        case 0:
+                            if ((vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)) <= 20)
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CPapier(vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)));
+                            else
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CPapier(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE))));
+                            break;
+                        case 1:
+                            if ((vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)) <= 20)
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CPlastique(vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)));
+                            else
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CPlastique(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE))));
+                            break;
+                        case 2:
+                            if ((vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)) <= 20)
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CVerre(vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)));
+                            else
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CVerre(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE))));
+                            break;
+                        case 3:
+                            if ((vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)) <= 20)
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CTerreContaminee(vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)));
+                            else
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CTerreContaminee(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE))));
+                            break;
+                        case 4:
+                            if((vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)) <= 20)
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CFerraille(vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE)));
+                            else
+                                vaisseau.PILEMATIEREVAISSEAU.Push(new CFerraille(random.Next(1, vaisseau.CAPACITEMAX - vaisseau.PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE))));
+                            break;
+                    }
+                    Qte += vaisseau.PILEMATIEREVAISSEAU.Peek().QUANTITE;
+                }
             }
-            Console.ReadKey();
         }
 
         public void CreerCentresTri() //création des centres de tri avec gestion des nombres premiers et des multiple de 5
@@ -104,15 +138,14 @@ namespace ProjetVaisseaux
 
             }
             listeCentresTri[0].FILEARRIVEE = fileVaisseaux;
-            Console.ReadKey();
         }
 
         public void DechargerVaisseau() //décharge les vaisseaux à l'aide du drone de transport
         {
             bool stayinWhile = true;
 
-            Console.WriteLine("Centre Tri #     Papier     Verre     Plastique     Ferraille     Terre");
-            Console.WriteLine("-----------------------------------------------------------------------");
+            Console.WriteLine("╔══════════╤════════╤═══════╤═══════════╤═══════════╤═══════╤═══════════════════════════╗");
+            Console.WriteLine("║ Centre # │ Papier │ Verre │ Plastique │ Ferraille │ Terre │ Vaisseaux vides restants  ║");
 
             for (noCentreTri = 0; noCentreTri <= listeCentresTri.Count - 1; noCentreTri++)
             {
@@ -262,7 +295,7 @@ namespace ProjetVaisseaux
                                 }
 
                                 break;
-                            case "terre":
+                            case "terre": //J'avais oublié de mettre TERRE à la place de ferraille lors de l'appel de la méthode ViderCentreTri
 
 
                                 if (droneTransport.QUANTITE + listeCentresTri[noCentreTri].PILETERRE.Sum(i => i.QUANTITE) > listeCentresTri[noCentreTri].CAPACITEMAXTERRE) //Si la quantité de matières dans le drone + la quantité déjà dans la pile du centre de tri dépasse la capacité maximal
@@ -273,7 +306,7 @@ namespace ProjetVaisseaux
                                         listeCentresTri[noCentreTri].PILETERRE.Push(new CTerreContaminee(listeCentresTri[noCentreTri].CAPACITEMAXTERRE - listeCentresTri[noCentreTri].PILETERRE.Sum(i => i.QUANTITE)));
                                         vaisseauActif.PILEMATIEREVAISSEAU.Push(droneTransport);
                                         if (listeCentresTri[noCentreTri].FILEDEPART.Count != 0)
-                                            ViderPileCentreTri("FERRAILLE");
+                                            ViderPileCentreTri("TERRE");
                                         else
                                             stayinWhile = false;
                                     }
@@ -287,7 +320,7 @@ namespace ProjetVaisseaux
                                 {
                                     listeCentresTri[noCentreTri].PILETERRE.Push(droneTransport as CTerreContaminee);
                                     if (listeCentresTri[noCentreTri].FILEDEPART.Count != 0)
-                                        ViderPileCentreTri("FERRAILLE");
+                                        ViderPileCentreTri("TERRE");
                                     else
                                         stayinWhile = false;
                                 }
@@ -304,18 +337,24 @@ namespace ProjetVaisseaux
                     listeCentresTri[noCentreTri].FILEDEPART.Enqueue(vaisseauActif);
                 }
                 EnvoyerPileDepart();
+                Console.WriteLine("╟──────────┼────────┼───────┼───────────┼───────────┼───────┼───────────────────────────╢");
+                Console.Write("║          │        │       │           │           │       │                           ║");
+                Console.CursorLeft = 2;
                 Console.Write(noCentreTri + 1);
-                Console.CursorLeft = 10;
+                Console.CursorLeft = 13;
                 Console.Write(listeCentresTri[noCentreTri].PILEPAPIER.Sum(i => i.QUANTITE));
-                Console.CursorLeft = 20;
+                Console.CursorLeft = 22;
                 Console.Write(listeCentresTri[noCentreTri].PILEVERRE.Sum(i => i.QUANTITE));
-                Console.CursorLeft = 30;
+                Console.CursorLeft = 31;                                                                                                //Modification de l'interface: Affichage dans un tableau plus lisible
                 Console.Write(listeCentresTri[noCentreTri].PILEPLASTIQUE.Sum(i => i.QUANTITE));
-                Console.CursorLeft = 40;
+                Console.CursorLeft = 43;
                 Console.Write(listeCentresTri[noCentreTri].PILEFERRAILLE.Sum(i => i.QUANTITE));
-                Console.CursorLeft = 50;
-                Console.WriteLine(listeCentresTri[noCentreTri].PILETERRE.Sum(i => i.QUANTITE));
+                Console.CursorLeft = 54;
+                Console.Write(listeCentresTri[noCentreTri].PILETERRE.Sum(i => i.QUANTITE));
+                Console.CursorLeft = 73;
+                Console.WriteLine(listeCentresTri[noCentreTri].FILEVAISSEAUXVIDE.Count);
             }
+            Console.WriteLine("╚══════════╧════════╧═══════╧═══════════╧═══════════╧═══════╧═══════════════════════════╝");
         }
 
         public void ViderPileCentreTri(string matiere) //vide les piles qui sont pleines
@@ -337,18 +376,12 @@ namespace ProjetVaisseaux
                             {
                                 listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Push(new CPapier(espaceRestante));
                                 listeCentresTri[noCentreTri].PILEPAPIER.Peek().QUANTITE -= espaceRestante;
-                                if (noCentreTri != nbrCentresTri - 1)
-                                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                                else
-                                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                                EnvoyerVaisseau();
                             }
                         }
                         else
                         {
-                            if (noCentreTri != nbrCentresTri - 1)
-                                listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                            else
-                                listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                            EnvoyerVaisseau();
                         }   
                     }
                     break;
@@ -367,18 +400,12 @@ namespace ProjetVaisseaux
                             {
                                 listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Push(new CFerraille(espaceRestante));
                                 listeCentresTri[noCentreTri].PILEFERRAILLE.Peek().QUANTITE -= espaceRestante;
-                                if (noCentreTri != nbrCentresTri - 1)
-                                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                                else
-                                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                                EnvoyerVaisseau();
                             }
                         }
                         else
                         {
-                            if (noCentreTri != nbrCentresTri - 1)
-                                listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                            else
-                                listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                            EnvoyerVaisseau();
                         }
                     }
                     break;
@@ -397,18 +424,12 @@ namespace ProjetVaisseaux
                             {
                                 listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Push(new CTerreContaminee(espaceRestante));
                                 listeCentresTri[noCentreTri].PILETERRE.Peek().QUANTITE -= espaceRestante;
-                                if (noCentreTri != nbrCentresTri - 1)
-                                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                                else
-                                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                                EnvoyerVaisseau();
                             }
                         }
                         else
                         {
-                            if (noCentreTri != nbrCentresTri - 1)
-                                listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                            else
-                                listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                            EnvoyerVaisseau();
                         }
                     }
                     break;
@@ -427,15 +448,12 @@ namespace ProjetVaisseaux
                             {
                                 listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Push(new CVerre(espaceRestante));
                                 listeCentresTri[noCentreTri].PILEVERRE.Peek().QUANTITE -= espaceRestante;
-                                if (noCentreTri != nbrCentresTri - 1)
-                                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                                else
-                                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                                EnvoyerVaisseau();
                             }
                         }
                         else
                         {
-                            listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
+                            EnvoyerVaisseau();
                         }
                     }
                     break;
@@ -454,18 +472,12 @@ namespace ProjetVaisseaux
                             {
                                 listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Push(new CPlastique(espaceRestante));
                                 listeCentresTri[noCentreTri].PILEPLASTIQUE.Peek().QUANTITE -= espaceRestante;
-                                if (noCentreTri != nbrCentresTri - 1)
-                                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                                else
-                                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                                EnvoyerVaisseau();
                             }
                         }
                         else
                         {
-                            if (noCentreTri != nbrCentresTri - 1)
-                                listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                            else
-                                listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                            EnvoyerVaisseau();
                         }
                     }
                     break;
@@ -492,16 +504,28 @@ namespace ProjetVaisseaux
             return true;
         }
 
-        private void EnvoyerPileDepart() //déplace les vaisseaux des files de départ vers les files d'arrivée des centres de tri suivants
+        private void EnvoyerPileDepart() //déplace les vaisseaux des files de départ vers les files d'arrivée des centres de tri suivants ou vers le néant si c'eSt le dernier centre de tri
         {
             while (listeCentresTri[noCentreTri].FILEDEPART.Count > 0)
             {
-                    if (noCentreTri != nbrCentresTri - 1)
-                        listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
-                    else
-                        listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+                EnvoyerVaisseau();
             }
+        }
 
+        private void EnvoyerVaisseau() //Méthode qui sert à décider le sort du vaisseaux lorsqu'on doit l'envoyer ailleurs
+        {
+            if(listeCentresTri[noCentreTri].FILEDEPART.Peek().PILEMATIEREVAISSEAU.Sum(i => i.QUANTITE) > 0)
+            {
+                if (noCentreTri != nbrCentresTri - 1)
+                    listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
+                else
+                    listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
+            }
+            else
+            {
+                listeCentresTri[noCentreTri].FILEVAISSEAUXVIDE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
+            }
+           
         }
     }
 }

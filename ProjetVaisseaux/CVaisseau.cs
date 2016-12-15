@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjetVaisseaux
 {
-    class CVaisseau
+    class CVaisseau //J'ai supprimé les objets de matière qui ne servaient à rien suite au changement de random
     {
         int capaciteMax;
-        CPapier papier;
-        CVerre verre;
-        CPlastique plastique;
-        CFerraille ferraille;
-        CTerreContaminee terre;
         Stack<CMatières> PileMatieresVaisseaux = new Stack<CMatières>();
 
 
@@ -25,36 +20,6 @@ namespace ProjetVaisseaux
         public int CAPACITEMAX
         {
             get { return capaciteMax; }
-        }
-
-        public CPapier PAPIER
-        {
-            get { return papier; }
-            set { papier = value; }
-        }
-
-        public CVerre VERRE
-        {
-            get { return verre; }
-            set { verre = value; }
-        }
-
-        public CPlastique PLASTIQUE
-        {
-            get { return plastique; }
-            set { plastique = value; }
-        }
-
-        public CFerraille FERRAILLE
-        {
-            get { return ferraille; }
-            set { ferraille = value; }
-        }
-
-        public CTerreContaminee TERRE
-        {
-            get { return terre; }
-            set { terre = value; }
         }
 
         public Stack<CMatières> PILEMATIEREVAISSEAU

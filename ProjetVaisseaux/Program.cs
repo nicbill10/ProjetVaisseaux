@@ -1,7 +1,7 @@
 ﻿/*******************************************************************************
     Nicolas Bilodeau
-    Charles Bouchard-Tremblay
 
+    Examen modification:
     Projet final: Gestion de centre de tri
 
     Description: Simulation de tri de matières recyclables
