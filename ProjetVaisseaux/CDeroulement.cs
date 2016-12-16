@@ -273,7 +273,7 @@ namespace ProjetVaisseaux
                                         listeCentresTri[noCentreTri].PILETERRE.Push(new CTerreContaminee(listeCentresTri[noCentreTri].CAPACITEMAXTERRE - listeCentresTri[noCentreTri].PILETERRE.Sum(i => i.QUANTITE)));
                                         vaisseauActif.PILEMATIEREVAISSEAU.Push(droneTransport);
                                         if (listeCentresTri[noCentreTri].FILEDEPART.Count != 0)
-                                            ViderPileCentreTri("FERRAILLE");
+                                            ViderPileCentreTri("TERRE");
                                         else
                                             stayinWhile = false;
                                     }
@@ -287,7 +287,7 @@ namespace ProjetVaisseaux
                                 {
                                     listeCentresTri[noCentreTri].PILETERRE.Push(droneTransport as CTerreContaminee);
                                     if (listeCentresTri[noCentreTri].FILEDEPART.Count != 0)
-                                        ViderPileCentreTri("FERRAILLE");
+                                        ViderPileCentreTri("TERRE");
                                     else
                                         stayinWhile = false;
                                 }
@@ -435,7 +435,10 @@ namespace ProjetVaisseaux
                         }
                         else
                         {
-                            listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
+                            if (noCentreTri != nbrCentresTri - 1)
+                                listeCentresTri[noCentreTri + 1].FILEARRIVEE.Enqueue(listeCentresTri[noCentreTri].FILEDEPART.Dequeue());
+                            else
+                                listeCentresTri[noCentreTri].FILEDEPART.Dequeue();
                         }
                     }
                     break;
